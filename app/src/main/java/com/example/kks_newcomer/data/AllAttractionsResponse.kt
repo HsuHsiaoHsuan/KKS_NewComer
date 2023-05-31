@@ -8,11 +8,11 @@ data class AllAttractionsResponse(
     val total: Int,
 
     @Json(name = "data")
-    val allAttractionsData: List<Attractions>
+    val allAttractionsData: List<AttractionDto>
 )
 
 @JsonClass(generateAdapter = true)
-data class Attractions(
+data class AttractionDto(
     val id: Long,
     val name: String,
 
@@ -34,8 +34,10 @@ data class Attractions(
     val fax: String,
     val email: String,
     val months: String,
-    val nlat: Double,
-    val elong: Double,
+    @Json(name = "nlat")
+    val latitude: Double,
+    @Json(name = "elong")
+    val longitude: Double,
 
     @Json(name = "official_site")
     val officialSite: String,
@@ -63,7 +65,18 @@ data class Image(
 )
 
 @JsonClass(generateAdapter = true)
-data class Link (
+data class Link(
     val src: String,
     val subject: String
+)
+
+fun AttractionDto.toAttraction(): Attraction = Attraction(
+    id = this.id,
+    name = this.name,
+    address = this.address,
+    tel = this.tel,
+    officialSite = this.officialSite,
+    remind = this.remind,
+    url = this.url,
+    images = this.images
 )

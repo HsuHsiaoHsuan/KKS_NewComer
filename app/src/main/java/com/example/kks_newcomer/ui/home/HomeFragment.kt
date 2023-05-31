@@ -1,10 +1,10 @@
 package com.example.kks_newcomer.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -23,11 +23,17 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private val attractionAdapter = AttractionAdapter { attraction ->
+        Timber.d(attraction.toString())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.list.adapter = attractionAdapter
+
         return binding.root
     }
 
@@ -37,24 +43,20 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.viewState.collectLatest {
                     when (it) {
-                        is HomeViewState.Loading -> {
-                            Timber.e("Loading")
-                        }
-
+                        is HomeViewState.Nothing -> Unit
+                        is HomeViewState.Loading -> Unit
                         is HomeViewState.AllAttractionsDataReady -> {
-                            Timber.d("HIHI: ${it.data}")
+                            attractionAdapter.submitList(it.data)
                         }
-                        HomeViewState.Error -> {
+                        is HomeViewState.Error -> {
                             Timber.e("Error")
                         }
-                        HomeViewState.Nothing -> {
-                            Timber.e("Nothing")
-                        }
+
                     }
                 }
             }
         }
-        viewModel.fetchCategory()
+//        viewModel.fetchCategory()
         viewModel.fetchAllAttractions()
     }
 }
