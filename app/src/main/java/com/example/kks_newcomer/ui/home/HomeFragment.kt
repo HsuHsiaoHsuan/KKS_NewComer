@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.kks_newcomer.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -26,13 +27,17 @@ class HomeFragment : Fragment() {
     private val attractionAdapter = AttractionAdapter { attraction ->
         Timber.d(attraction.toString())
     }
+    private val attractionPagingAdapter = AttractionPagingAdapter { attraction ->
+        Timber.d(attraction.toString())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.list.adapter = attractionAdapter
+        binding.list.adapter = attractionPagingAdapter
+//        binding.list.adapter = attractionAdapter
 
         return binding.root
     }
@@ -41,12 +46,19 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+//                viewModel.fetchAllAttractions2().distinctUntilChanged().collectLatest {
+//                    attractionPagingAdapter.submitData(it)
+//                }
+
                 viewModel.viewState.collectLatest {
                     when (it) {
                         is HomeViewState.Nothing -> Unit
                         is HomeViewState.Loading -> Unit
                         is HomeViewState.AllAttractionsDataReady -> {
-                            attractionAdapter.submitList(it.data)
+//                            attractionAdapter.submitList(it.data)
+                        }
+                        is HomeViewState.AllAttractionsDataReady2 -> {
+                            attractionPagingAdapter.submitData(it.data)
                         }
                         is HomeViewState.Error -> {
                             Timber.e("Error")
@@ -57,6 +69,7 @@ class HomeFragment : Fragment() {
             }
         }
 //        viewModel.fetchCategory()
-        viewModel.fetchAllAttractions()
+//        viewModel.fetchAllAttractions()
+        viewModel.fetchAllAttractions2()
     }
 }

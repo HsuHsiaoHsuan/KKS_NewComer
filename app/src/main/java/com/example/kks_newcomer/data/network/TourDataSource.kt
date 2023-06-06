@@ -1,6 +1,8 @@
 package com.example.kks_newcomer.data.network
 
+import androidx.paging.Pager
 import com.example.kks_newcomer.data.AllAttractionsResponse
+import com.example.kks_newcomer.data.Attraction
 import com.example.kks_newcomer.data.CategoryResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
