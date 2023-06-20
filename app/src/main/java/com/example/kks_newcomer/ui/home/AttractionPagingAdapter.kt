@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.kks_newcomer.data.Attraction
 import com.example.kks_newcomer.databinding.ItemListAttractionBinding
 
@@ -24,6 +25,7 @@ class AttractionPagingAdapter(private val onClick: (Attraction) -> Unit) :
         fun bind(attraction: Attraction) {
             currentAttraction = attraction
             binding.textTitle.text = attraction.name
+            binding.image.load(attraction.images.firstOrNull()?.src)
         }
     }
 
@@ -47,8 +49,6 @@ class AttractionPagingAdapter(private val onClick: (Attraction) -> Unit) :
             override fun areContentsTheSame(oldItem: Attraction, newItem: Attraction): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
-
 }

@@ -12,7 +12,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.kks_newcomer.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -46,30 +45,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-//                viewModel.fetchAllAttractions2().distinctUntilChanged().collectLatest {
-//                    attractionPagingAdapter.submitData(it)
-//                }
 
                 viewModel.viewState.collectLatest {
                     when (it) {
                         is HomeViewState.Nothing -> Unit
                         is HomeViewState.Loading -> Unit
                         is HomeViewState.AllAttractionsDataReady -> {
-//                            attractionAdapter.submitList(it.data)
-                        }
-                        is HomeViewState.AllAttractionsDataReady2 -> {
                             attractionPagingAdapter.submitData(it.data)
                         }
                         is HomeViewState.Error -> {
                             Timber.e("Error")
                         }
-
                     }
                 }
             }
         }
-//        viewModel.fetchCategory()
-//        viewModel.fetchAllAttractions()
-        viewModel.fetchAllAttractions2()
+        viewModel.fetchAllAttractionsPaged()
     }
 }
