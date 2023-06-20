@@ -9,6 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.example.kks_newcomer.R
 import com.example.kks_newcomer.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -23,11 +26,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val attractionAdapter = AttractionAdapter { attraction ->
-        Timber.d(attraction.toString())
-    }
     private val attractionPagingAdapter = AttractionPagingAdapter { attraction ->
         Timber.d(attraction.toString())
+        findNavController().navigate(R.id.detailFragment)
     }
 
     override fun onCreateView(
@@ -36,7 +37,6 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.list.adapter = attractionPagingAdapter
-//        binding.list.adapter = attractionAdapter
 
         return binding.root
     }
@@ -45,7 +45,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-
                 viewModel.viewState.collectLatest {
                     when (it) {
                         is HomeViewState.Nothing -> Unit
