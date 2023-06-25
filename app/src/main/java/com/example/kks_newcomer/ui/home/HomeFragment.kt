@@ -65,6 +65,5 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        viewModel.fetchAllAttractionsPaged()
     }
 }
