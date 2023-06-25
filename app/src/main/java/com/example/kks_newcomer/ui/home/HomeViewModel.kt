@@ -2,14 +2,12 @@ package com.example.kks_newcomer.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.example.kks_newcomer.data.Category
 import com.example.kks_newcomer.domain.FetchAllAttractionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -28,14 +26,13 @@ class HomeViewModel @Inject constructor(
     fun fetchAllAttractionsPaged(lang: String = "zh-tw", page: Int = 1) = viewModelScope.launch {
         _viewState.emit(HomeViewState.Loading)
         try {
-            fetchAllAttractionsUseCase(page = page).distinctUntilChanged().collectLatest {
+            fetchAllAttractionsUseCase(page = page).cachedIn(viewModelScope).distinctUntilChanged().collectLatest {
                 _viewState.emit(HomeViewState.AllAttractionsDataReady(data = it))
             }
         } catch (exception: Exception) {
             Timber.e("error: $exception")
             _viewState.emit(HomeViewState.Error)
         }
-
     }
 
     private var _category: MutableStateFlow<List<Category>> = MutableStateFlow(listOf())
