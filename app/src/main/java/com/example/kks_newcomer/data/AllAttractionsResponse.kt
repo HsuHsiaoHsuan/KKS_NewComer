@@ -1,7 +1,9 @@
 package com.example.kks_newcomer.data
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 data class AllAttractionsResponse(
@@ -57,12 +59,13 @@ data class AttractionDto(
     val links: List<Link>
 )
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class Image(
     val src: String,
     val subject: String,
     val ext: String
-)
+): Parcelable
 
 @JsonClass(generateAdapter = true)
 data class Link(

@@ -5,3 +5,5 @@
 4. Moshi to parse JSON response
 5. Timber to show debug message
 6. use Paging3 to load paged RESTful data
+7. use Navigation component with Safe Args to pass value between Fragments.
+8. use kotlin-parcelize to support data Parcelable
