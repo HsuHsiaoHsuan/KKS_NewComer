@@ -19,6 +19,10 @@ class HomeViewModel @Inject constructor(
     private val fetchAllAttractionsUseCase: FetchAllAttractionsUseCase
 ) : ViewModel() {
 
+    init {
+        fetchAllAttractionsPaged()
+    }
+
     private var _viewState: MutableStateFlow<HomeViewState> =
         MutableStateFlow(HomeViewState.Nothing)
     val viewState: Flow<HomeViewState> = _viewState
