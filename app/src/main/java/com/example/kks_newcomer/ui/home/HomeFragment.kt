@@ -9,10 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.kks_newcomer.R
 import com.example.kks_newcomer.databinding.FragmentHomeBinding
+import com.example.kks_newcomer.databinding.PagingLoadStateBinding
+import com.example.kks_newcomer.ui.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -29,6 +30,11 @@ class HomeFragment : Fragment() {
     private val attractionPagingAdapter = AttractionPagingAdapter { attraction ->
         Timber.d(attraction.toString())
         findNavController().navigate(R.id.detailFragment)
+    }.apply {
+        withLoadStateHeaderAndFooter(
+            header = PagingLoadStateAdapter { this.retry() },
+            footer = PagingLoadStateAdapter { this.retry() }
+        )
     }
 
     override fun onCreateView(
