@@ -25,7 +25,7 @@ class AttractionPagingAdapter(private val onClick: (Attraction) -> Unit) :
         fun bind(attraction: Attraction) {
             currentAttraction = attraction
             binding.textTitle.text = attraction.name
-            binding.image.load(attraction.images.firstOrNull()?.src)
+            binding.image.load(attraction.images?.firstOrNull()?.src)
         }
     }
 

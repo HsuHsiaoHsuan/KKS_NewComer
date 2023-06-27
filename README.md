@@ -1,3 +1,6 @@
+# data source
+https://www.travel.taipei/open-api/swagger/docs/V1
+
 # use tech
 1. MVVM with Hilt 
 2. Network: Retrofit + OkHttp
