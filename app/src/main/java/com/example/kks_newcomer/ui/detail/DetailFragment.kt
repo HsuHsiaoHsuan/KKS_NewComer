@@ -1,11 +1,11 @@
 package com.example.kks_newcomer.ui.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.kks_newcomer.data.Attraction
@@ -28,7 +28,7 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val data = arguments?.getParcelable<Attraction>("attraction")
 
-        if (data?.images != null) {
+        if (data?.images != null && data.images.isNotEmpty()) {
             binding.recyclerImages.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = ImageGalleryAdapter(data.images.map { it.src })
