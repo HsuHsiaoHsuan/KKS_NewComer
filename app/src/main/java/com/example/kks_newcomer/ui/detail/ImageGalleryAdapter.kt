@@ -13,7 +13,7 @@ class ImageGalleryAdapter(private val dataSet: List<String>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ImageGalleryAdapter.ViewHolder {
+    ): ViewHolder {
         val binding =
             ItemImageCarouselBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -21,7 +21,7 @@ class ImageGalleryAdapter(private val dataSet: List<String>) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = dataSet[position]
-        (holder as ImageGalleryAdapter.ViewHolder).bind(data)
+        (holder as ViewHolder).bind(data)
     }
 
     override fun getItemCount(): Int = dataSet.size
