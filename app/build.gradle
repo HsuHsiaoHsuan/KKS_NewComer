@@ -49,11 +49,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.fragment:fragment-ktx:1.6.0'
+    implementation 'androidx.fragment:fragment-ktx:1.6.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
-    implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
+    implementation 'androidx.paging:paging-runtime-ktx:3.2.0'
     implementation 'com.google.android.material:material:1.9.0'
 
     // ui
@@ -63,13 +63,14 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.15.0'
     implementation 'io.coil-kt:coil:2.4.0'
+    implementation 'me.relex:circleindicator:2.1.6'
 
     // injection
-    implementation 'com.google.dagger:hilt-android:2.46.1'
-    kapt 'com.google.dagger:hilt-compiler:2.46.1'
+    implementation 'com.google.dagger:hilt-android:2.47'
+    kapt 'com.google.dagger:hilt-compiler:2.47'
 
     // network
-    implementation 'com.squareup.okhttp3:okhttp:4.9.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.2"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'

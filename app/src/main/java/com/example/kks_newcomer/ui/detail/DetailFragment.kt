@@ -32,10 +32,14 @@ class DetailFragment : Fragment() {
             binding.recyclerImages.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = ImageGalleryAdapter(data.images.map { it.src })
-                PagerSnapHelper().attachToRecyclerView(this)
+                PagerSnapHelper().also {
+                    it.attachToRecyclerView(this)
+                    binding.indicator.attachToRecyclerView(this, it)
+                }
             }
         } else {
             binding.recyclerImages.isVisible = false
+            binding.indicator.isVisible = false
         }
         binding.textName.text = data?.name
         binding.textAddress.text = data?.address
