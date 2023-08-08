@@ -10,3 +10,4 @@ https://www.travel.taipei/open-api/swagger/docs/V1
 6. use Paging3 to load paged RESTful data
 7. use Navigation component with Safe Args to pass value between Fragments.
 8. use kotlin-parcelize to support data Parcelable
+9. use [CircleIndicator](https://github.com/ongakuer/CircleIndicator)
