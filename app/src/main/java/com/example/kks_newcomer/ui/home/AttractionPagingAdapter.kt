@@ -1,37 +1,29 @@
 package com.example.kks_newcomer.ui.home
 
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.kks_newcomer.data.Attraction
-import com.example.kks_newcomer.databinding.ItemListAttractionBinding
 
 class AttractionPagingAdapter(private val onClick: (Attraction) -> Unit) :
     PagingDataAdapter<Attraction, AttractionPagingAdapter.AttractionPagingViewHolder>(DIFF_CALLBACK) {
 
-    class AttractionPagingViewHolder(private val binding: ItemListAttractionBinding, private val onClick: (Attraction) -> Unit) :
-        RecyclerView.ViewHolder(binding.root) {
+    class AttractionPagingViewHolder(private val composeView: ComposeView, private val onClick: (Attraction) -> Unit) :
+        RecyclerView.ViewHolder(composeView) {
         private var currentAttraction: Attraction? = null
-        init {
-            binding.root.setOnClickListener {
-                currentAttraction?.let {
-                    onClick(it)
-                }
-            }
-        }
         fun bind(attraction: Attraction) {
             currentAttraction = attraction
-            binding.textTitle.text = attraction.name
-            binding.image.load(attraction.images?.firstOrNull()?.src)
+            composeView.setContent {
+                ItemListAttraction(attraction, onClick)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttractionPagingViewHolder {
-        val binding = ItemListAttractionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AttractionPagingViewHolder(binding, onClick)
+        return AttractionPagingViewHolder(ComposeView(parent.context), onClick)
     }
 
     override fun onBindViewHolder(holder: AttractionPagingViewHolder, position: Int) {
